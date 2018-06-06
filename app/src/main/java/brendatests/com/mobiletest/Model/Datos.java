@@ -1,4 +1,4 @@
-package brendatests.com.diagnosticoveterinario.Model;
+package brendatests.com.mobiletest.Model;
 
 public class Datos {
 

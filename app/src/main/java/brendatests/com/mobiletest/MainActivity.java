@@ -1,4 +1,4 @@
-package brendatests.com.diagnosticoveterinario;
+package brendatests.com.mobiletest;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -1,8 +1,8 @@
-package brendatests.com.diagnosticoveterinario.inputoutput;
+package brendatests.com.mobiletest.inputoutput;
 
 import java.util.ArrayList;
 
-import brendatests.com.diagnosticoveterinario.Model.Datos;
+import brendatests.com.mobiletest.Model.Datos;
 import retrofit2.Call;
 import retrofit2.http.GET;
 

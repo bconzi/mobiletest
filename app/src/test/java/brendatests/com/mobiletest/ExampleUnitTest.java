@@ -1,4 +1,4 @@
-package brendatests.com.diagnosticoveterinario;
+package brendatests.com.mobiletest;
 
 import org.junit.Test;
 

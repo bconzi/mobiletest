@@ -1,4 +1,4 @@
-package brendatests.com.diagnosticoveterinario.inputoutput;
+package brendatests.com.mobiletest.inputoutput;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
