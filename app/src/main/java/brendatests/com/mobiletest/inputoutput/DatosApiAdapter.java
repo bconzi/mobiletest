@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
 
 public class DatosApiAdapter {
 
@@ -20,7 +21,6 @@ public class DatosApiAdapter {
         httpClient.addInterceptor(logging);
 
         String baseUrl = "https://randomuser.me/api/1.1/";
-
         if (API_SERVICE == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)

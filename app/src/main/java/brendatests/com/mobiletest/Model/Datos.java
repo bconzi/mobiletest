@@ -16,20 +16,20 @@ public class Datos {
         this.username = username;
     }
 
-    public String getFirstname() {
+    public String getName() {
         return name;
     }
 
-    public void setFirstname(String firstname) {
-        this.name = firstname;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastname() {
+    public String getLast() {
         return last;
     }
 
-    public void setLastname(String lastname) {
-        this.last = lastname;
+    public void setLast(String last) {
+        this.last = last;
     }
 
     public String getEmail() {
