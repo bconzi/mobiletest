@@ -1,66 +1,92 @@
 package brendatests.com.mobiletest;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import brendatests.com.mobiletest.Model.Datos;
+import brendatests.com.mobiletest.Model.RandomUser;
+import brendatests.com.mobiletest.Model.RandomUserResponse;
 import brendatests.com.mobiletest.inputoutput.DatosApiAdapter;
-import brendatests.com.mobiletest.userinterface.adapter.DatosAdapter;
+import brendatests.com.mobiletest.userinterface.RecyclerTouchListener;
+import brendatests.com.mobiletest.userinterface.adapter.RandomUserAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static brendatests.com.mobiletest.inputoutput.DatosApiAdapter.getApiService;
+public class MainActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity implements Callback<ArrayList<Datos>> {
+    private RandomUserAdapter mAdapter;
 
-    private DatosAdapter mAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Configurar el RecyclerView
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewDatos);
+        final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewPhotos);
 
         mRecyclerView.setHasFixedSize(true);
 
-        // Nuestro RecyclerView usará un linear layout manager
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+        mRecyclerView.setLayoutManager(layoutManager);
 
-        // Asocio el Recycler View con un adapter- Define cómo se va a renderizar la info que tengo
-        mAdapter = new DatosAdapter();
+        mAdapter = new RandomUserAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
+        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(this,
+                mRecyclerView, new RecyclerTouchListener.ClickListener() {
+
+            @Override
+            public void onClick(View view, final int position) {
+                //Values are passing to activity & to fragment as well
+                RandomUser randomUser = ((RandomUserAdapter) mRecyclerView.getAdapter()).getItem(position);
+
+                navigateToDetails(randomUser);
+
+            }
+
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(MainActivity.this, "Long press on position :" + position,
+                        Toast.LENGTH_LONG).show();
+            }
+        }));
 
         //Llamar al ApiService
-        Call<ArrayList<Datos>> call= DatosApiAdapter.getApiService().getDatos();
 
-        call.enqueue(this);
+        Call<RandomUserResponse> call = DatosApiAdapter.getApiService().traerUsuarios(50);
+
+        call.enqueue(new Callback<RandomUserResponse>() {
+            @Override
+            public void onResponse(Call<RandomUserResponse> call, Response<RandomUserResponse> response) {
+                RandomUserResponse userResponse = response.body();
+
+                ((RandomUserAdapter) mRecyclerView.getAdapter()).setDataset(userResponse.getRandomUsers());
+
+            }
+
+            @Override
+            public void onFailure(Call<RandomUserResponse> call, Throwable t) {
+
+            }
+        });
 
 
     }
 
-    @Override
-    public void onResponse(Call<ArrayList<Datos>> call, Response<ArrayList<Datos>> response) {
-        if (response.isSuccessful()){
-            ArrayList<Datos> datos= response.body();
-            Log.d("onResponse datos", "Size of datos => "+datos.size());
+    private void navigateToDetails(RandomUser randomUser) {
 
-            mAdapter.setDataset(datos);
-        }
-    }
-
-    @Override
-    public void onFailure(Call<ArrayList<Datos>> call, Throwable t) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("Detalle", randomUser);
+        startActivity(intent);
 
     }
-    }
+
+
+}
 

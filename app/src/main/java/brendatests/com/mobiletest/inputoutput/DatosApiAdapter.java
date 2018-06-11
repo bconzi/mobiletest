@@ -20,7 +20,7 @@ public class DatosApiAdapter {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
 
-        String baseUrl = "https://randomuser.me/api/1.1/";
+        String baseUrl = "https://randomuser.me/";
         if (API_SERVICE == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
