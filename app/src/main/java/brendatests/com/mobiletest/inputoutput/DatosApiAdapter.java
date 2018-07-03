@@ -12,11 +12,11 @@ public class DatosApiAdapter {
 
     public static DatosApiService getApiService() {
 
-        // Creamos un interceptor y le indicamos el log level a usar
+
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        // Asociamos el interceptor a las peticiones
+
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
 
@@ -25,7 +25,7 @@ public class DatosApiAdapter {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .client(httpClient.build()) // <-- usamos el log level
+                    .client(httpClient.build()) //
                     .build();
             API_SERVICE = retrofit.create(DatosApiService.class);
         }

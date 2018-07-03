@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view, final int position) {
-                //Values are passing to activity & to fragment as well
+
                 RandomUser randomUser = ((RandomUserAdapter) mRecyclerView.getAdapter()).getItem(position);
 
                 navigateToDetails(randomUser);

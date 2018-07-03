@@ -22,22 +22,19 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Vi
         return mDataSet.get(position);
     }
 
-    // Obtener referencias de los componentes visuales para cada elemento
-    // Es decir, referencias de los EditText, TextViews, Buttons
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        // en este ejemplo cada elemento consta solo de un título
-        public TextView txtVname;
-        public ImageView ivPhotos;
 
+    // Este método reemplaza el contenido de cada view,
+    // para cada elemento de la lista
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int i) {
+        holder.txtVname.setText(mDataSet.get(i).getName().getFirst());
 
-        public ViewHolder(View v) {
-            super(v);
-            txtVname = (TextView) v.findViewById(R.id.txtname);
-            ivPhotos= (ImageView)v.findViewById(R.id.fotos);
-        }
+        Picasso.get().load(mDataSet.get(i).getPicture().getThumbnail()).into(holder.ivPhotos);
+
+        ;
     }
 
-    // Este es nuestro constructor (puede variar según lo que queremos mostrar)
+
     public RandomUserAdapter() {
 
 
@@ -53,6 +50,7 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Vi
     }
     // El layout manager invoca este método
     // para renderizar cada elemento del RecyclerView
+
     @Override
     public RandomUserAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                            int viewType) {
@@ -63,19 +61,21 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Vi
        return new ViewHolder(v);
     }
 
-    // Este método reemplaza el contenido de cada view,
-    // para cada elemento de la lista (nótese el argumento position)
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int i) {
-           holder.txtVname.setText(mDataSet.get(i).getName().getFirst());
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        Picasso.get().load(mDataSet.get(i).getPicture().getThumbnail()).into(holder.ivPhotos);
+        public TextView txtVname;
+        public ImageView ivPhotos;
 
-        ;
+
+        public ViewHolder(View v) {
+            super(v);
+            txtVname = (TextView) v.findViewById(R.id.txtname);
+            ivPhotos = (ImageView) v.findViewById(R.id.fotos);
+        }
     }
 
     // Método que define la cantidad de elementos del RecyclerView
-    // Puede ser más complejo en RecyclerViews que implementar filtros o búsquedas
+
     @Override
     public int getItemCount() {
         return mDataSet.size();
